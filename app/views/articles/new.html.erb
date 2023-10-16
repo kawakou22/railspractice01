@@ -1,0 +1,41 @@
+<h1>New Article</h1>
+
+<%= form_with model: @article do |form| %>
+<%# form_withヘルパーメソッドは、フォームビルダー（ここではform）をインスタンス化します。 %>
+<%#? form_withのブロック内でフォームビルダーのlabelやtext_fieldといったメソッドを呼び出すと、適切なフォーム要素が出力されます。 %>
+  <div>
+    <%= form.label :title %><br>
+    <%# 「LABEL」とは、フォームの中でフォームの項目名と構成部品（チェックボックス、ラジオボタンなど）を関連付けるためのタグです。 %>
+    <%= form.text_field :title %>
+    <%# textは単一行のテキスト入力欄です。 %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+    <%# 「TEXTAREA」とは、複数行の入力が可能な入力欄を作成するためのタグです。 %>
+  </div>
+
+  <div>
+    <%= form.submit %><br>
+  </div>
+<% end %>
+<%# 
+<form action="/articles" accept-charset="UTF-8" method="post">
+  <input type="hidden" name="authenticity_token" value="...">
+
+  <div>
+    <label for="article_title">Title</label><br>
+    <input type="text" name="article[title]" id="article_title">
+  </div>
+
+  <div>
+    <label for="article_body">Body</label><br>
+    <textarea name="article[body]" id="article_body"></textarea>
+  </div>
+
+  <div>
+    <input type="submit" name="commit" value="Create Article" data-disable-with="Create Article">
+  </div>
+</form> 
+%>
