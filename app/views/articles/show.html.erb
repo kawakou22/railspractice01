@@ -1,3 +1,24 @@
 <h1><%= @article.title %></h1>
 
+<%# <a href="#{root_path}">戻る</a> %>
+<%= link_to "top page", root_path %>
+<%# トップページに戻る %>
+
 <p><%= @article.body %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li><%= link_to "Destroy", article_path(@article), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    } %></li>
+    <%#? 上のコードでは、dataオプションを使って"Destroy"リンクのHTML属性data-turbo-methodとdata-turbo-confirmを設定しています。どちらの属性も、新しいRailsアプリケーションにデフォルトで含まれているTurboにフックします。 data-turbo-method="delete"を指定すると、GETリクエストではなくDELETEリクエストが送信されます。 data-turbo-confirm="Are you sure?" を指定すると、リンクをクリックしたときに「Are you sure?」ダイアログが表示され、ユーザーが「キャンセル」をクリックするとリクエストを中止します。 %>
+</ul>
+
+<h2>Comments</h2>
+<%= render @article.comments %>
+<%#? 部分テンプレートを表示する際に活用出来るrenderメソッドにはオプションとしてcollectionという記述が可能です。このcollectionを記述することにより、データを繰り返し表示するような場所でeachを使わずに記述することが可能になります。 %>
+<%#? app/views/comments/_comment.html.erbパーシャルが、@article.commentsコレクションに含まれているコメントをすべてレンダリングするようになりました。renderメソッドが@article.commentsコレクションに含まれる要素を1つずつ列挙するときに、各コメントをパーシャルと同じ名前のローカル変数に自動的に代入します。 %>
+
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>

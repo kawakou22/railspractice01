@@ -1,0 +1,20 @@
+<% unless comment.archived? %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+
+  <p>
+    <%= link_to "Destroy Comment", [comment.article, comment], data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    } %>
+    <%#! comment.articleはCommentsControllerのインスタンス変数@article link_toが自動的にオブジェクトをパスに変換しない状況（アソシエーションの参照元のパスを示す）の時は、参照先と参照元のオブジェクトをarrayに格納してパスとして表す %>
+  </p>
+  <%#? 「Destroy Comment」リンクをクリックすると、DELETE /articles/:article_id/comments/:idというリクエストがCommentsControllerに送信されます。コントローラはそれを受け取って、どのコメントを削除すべきかを検索することになります。 %>
+<% end %>

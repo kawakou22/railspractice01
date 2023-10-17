@@ -1,0 +1,57 @@
+<%#todo ビューのコードをパーシャルで共有する---------------- %>
+
+<%= form_with model: article do |form| %>
+<%= link_to "top page", root_path %>
+<%# form_withヘルパーメソッドは、フォームビルダー（ここではform）をインスタンス化します。 %>
+<%#? form_withのブロック内でフォームビルダーのlabelやtext_fieldといったメソッドを呼び出すと、適切なフォーム要素が出力されます。 %>
+  <div>
+    <%= form.label :title %><br>
+    <%# 「LABEL」とは、フォームの中でフォームの項目名と構成部品（チェックボックス、ラジオボタンなど）を関連付けるためのタグです。 %>
+    <%= form.text_field :title %>
+    <%# textは単一行のテキスト入力欄です。 %>
+    <% article.errors.full_messages_for(:title).each do |massage| %>
+    <%# full_messages_forメソッドは、指定の属性に対応するわかりやすいエラーメッセージを含む配列を1個返します。その属性でエラーが発生していない場合、配列は空になります。 %>
+    <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+    <%# 「TEXTAREA」とは、複数行の入力が可能な入力欄を作成するためのタグです。 %>
+    <% article.errors.full_messages_for(:body).each do |massage| %>
+    <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <%#todo ステータス選択%>
+  <div>
+    <%= form.label :status %><br>
+    <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public' %>
+  </div>
+
+  <div>
+    <%= form.submit %><br>
+  </div>
+<% end %>
+<%#? 上記のコードはapp/views/articles/new.html.erbのフォームと同じですが、すべての@articleをarticleに置き換えてある点にご注目ください。パーシャルのコードは共有されるので、特定のインスタンス変数に依存しないようにするのがベストプラクティスです（コントローラのアクションで設定されるインスタンス変数に依存すると、他で使い回すときに不都合が生じます）。代わりに、記事をローカル変数としてパーシャルに渡します。render でパーシャルを使うために、app/views/articles/new.html.erbを以下の内容で置き換えてみましょう。 %>
+
+<%# 
+<form action="/articles" accept-charset="UTF-8" method="post">
+  <input type="hidden" name="authenticity_token" value="...">
+
+  <div>
+    <label for="article_title">Title</label><br>
+    <input type="text" name="article[title]" id="article_title">
+  </div>
+
+  <div>
+    <label for="article_body">Body</label><br>
+    <textarea name="article[body]" id="article_body"></textarea>
+  </div>
+
+  <div>
+    <input type="submit" name="commit" value="Create Article" data-disable-with="Create Article">
+  </div>
+</form> 
+%>

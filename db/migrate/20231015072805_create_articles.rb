@@ -1,4 +1,7 @@
+#todo MVCのM（model）----------------------------
 #? マイグレーション（migration）は、アプリケーションのデータベース構造を変更するときに使われる機能です。
+# この機能を使うことで特定のデータベースの文法に依存せずにテーブルへ行なう操作を記述でき、変更を実施したり元に戻すといった作業が簡単に行なえるようになります。
+# マイグレーションが実行されるとdbフォルダにschema.rbというファイルが作成されます。
 class CreateArticles < ActiveRecord::Migration[7.1]
   def change
     create_table :articles do |t|
